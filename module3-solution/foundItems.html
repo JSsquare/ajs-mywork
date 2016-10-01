@@ -1,3 +1,4 @@
+  <p ng-if="narrowIt.found.length === 0">Nothing Found!</p>
 <ol>
   <li ng-repeat="found in narrowIt.found track by $index">
     Short Name: {{found.short_name}} || Name: {{found.name}} || Description: {{found.description}}
