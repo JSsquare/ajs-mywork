@@ -58,7 +58,7 @@
 			service.found.length = 0;			
 			angular.forEach(allItems.menu_items, function(value,index){
 				if (value.name.toLowerCase().indexOf(searchTerm.toLowerCase())!=-1 && searchTerm!="") {
-     			 service.found.push(value.name);
+     			 service.found.push(value);
     			}               
             });
             return service.found;

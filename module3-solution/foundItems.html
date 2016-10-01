@@ -1,6 +1,6 @@
 <ol>
   <li ng-repeat="found in narrowIt.found track by $index">
-    {{found}}
+    Short Name: {{found.short_name}} || Name: {{found.name}} || Description: {{found.description}}
     <button ng-click="narrowIt.removeItem({index: $index});">Don't want this one!</button>
   </li>
 </ol>
