@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app='menuApp'>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Menu Application</title>
+  </head>
+
+  <body>
+    <h1>Welcome to Anu's Kitchen</h1>
+
+    <ui-view></ui-view>
+
+    <!-- Libraries -->
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+
+
+
+
+    <script src="src/menuapp.module.js"></script>
+    <script src="src/data.module.js"></script>    
+     <!-- Routes -->
+    <script src="src/routes.js"></script>
+
+    <script src="src/categorieslist.controller.js"></script>
+    <script src="src/categorieslist.component.js"></script>
+     
+    <script src="src/categorieslistservice.service.js"></script>
+    <script src="src/itemslist.controller.js"></script>    
+    <script src="src/itemlistservice.service.js"></script>      
+    <!--<script src="src/shoppinglist/item-detail.controller.js"></script>-->
+
+</body>
