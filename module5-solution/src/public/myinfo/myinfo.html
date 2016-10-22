@@ -1,28 +1,21 @@
 <div class="container" ng-repeat="i in signupCtrl.$resolve">
 
-<div class="menu-item-tile col-md-6" ng-if="i.signedup">
-
+<div class="menu-item-tile col-md-6" ng-if="i.signedup" >
 			    <p>First Name: {{i.firstname}}</p>
 			    <p>Last Name: {{i.lastname}}</p>
 			    <p>Phone Number: {{i.phone}}</p>
-			    <p>Description: {{i.image.description}}</p>
-			    
-			    
-	        	<div>Title: {{i.image.dishname}}</div>
-	        	<p > <img class="img-responsive" width="250" height="150" ng-src="{{i.image.path}}"></p>            	
+			    <p>Description: {{i.description}}</p>			    			   
+	        	<div>Title: {{i.dishname}}</div>
+	        	<p > <img class="img-responsive" width="250" height="150" ng-src="{{i.image}}"></p>            	
 </div>
 
 
 <div ng-if="!i.signedup">
-			<div style="margin-top: 10px;">
-            <a ui-sref="public.signup">
-            Not Yet Signed Up.
-
-
-
-                
-                  <span class="glyphicon glyphicon-certificate"></span><br class="hidden-xs"> Sign Up</a>
-          </div>            
+		<div style="margin-top: 10px;">
+			Not Yet Signed Up.
+           <a ui-sref="public.signup">                       
+           <span class="glyphicon glyphicon-certificate"></span><br class="hidden-xs"> Sign Up</a>
+         </div>            
 </div>
 
 

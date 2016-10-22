@@ -5,21 +5,24 @@ angular.module('public')
 .controller('SignupController', SignupController)
 .service('callKitchenService', callKitchenService);
 
-SignupController.$inject = ['callKitchenService'];
+SignupController.$inject = ['callKitchenService', 'MenuService'];
 
-function SignupController(callKitchenService){	
+function SignupController(callKitchenService, MenuService){	
 	var signup = this;
 	signup.userdetails = [];
 
-	signup.submit = function (user) {		
-	        var promise = callKitchenService.getCategories(user.favDish);	        
+	signup.submit = function (user) {					
+	        var promise = callKitchenService.getDishDetails(user.favDish);	        
 		    promise.then(function (response) {
-		      signup.message = response.data.menu_items.length === 0 ? "No such menu number exists" : "Your information has been saved."
+
+		    	signup.message = "Your information has been saved.";
+		    	signup.userdetails = callKitchenService.saveUser(user, response.data);
+		      //signup.message = response.data.menu_items.length === 0 ? "No such menu number exists" : "Your information has been saved."
 		      
-		     signup.userdetails = response.data.menu_items.length === 0 ? (signup.userdetails.length = 0) : callKitchenService.pushUser(user, response.data.menu_items);
+		     //signup.userdetails = response.data.menu_items.length === 0 ? (signup.userdetails.length = 0) : callKitchenService.pushUser(user, response.data.menu_items);
 		    })
 		    .catch(function (error) {
-		      console.log(error);
+		     	signup.message = "No such menu number exist";		    
 		    })
 	};
 
@@ -29,37 +32,31 @@ function SignupController(callKitchenService){
 	callKitchenService.$inject = ['$http', 'ApiPath'];
 	function callKitchenService($http, ApiPath){
 		var kitchen = this;
-		kitchen.userdetails = {};
-		kitchen.userdetails.image = {};
-		kitchen.userdetails.image.path = [];
-		kitchen.userdetails.image.dishname = [];
+		kitchen.userdetails = {};		
 		//kitchen.userdetails.dishname = [];
 		kitchen.userdetails.signedup = false;
 
-		kitchen.getCategories = function(shortName){
+		kitchen.getDishDetails = function(shortName){
 		    var response = $http({
 		      method: "GET",
-		      url: (ApiPath + '/menu_items.json'),
-		      params: {
-       			 category: shortName
-      		  }
+		      url: (ApiPath + '/menu_items/' + shortName + '.json')
 		    });
 		   return response;			
 		};
 
 
-		kitchen.pushUser = function(user, menu_items){
-		  kitchen.userdetails.signedup = true;		
-		  kitchen.userdetails.image.length = 0;		  
+		kitchen.saveUser = function(user, menu_item){
+		  kitchen.userdetails.length = 0;
+
+		  kitchen.userdetails.signedup = true;
 		  kitchen.userdetails.firstname = user.firstname;
 		  kitchen.userdetails.lastname = user.lastname;
-		  kitchen.userdetails.phone = user.phone;		  
-		  console.log(menu_items);
-		  angular.forEach(menu_items, function (value, key) {
-		  	kitchen.userdetails.image["description"]= value.description;
-            kitchen.userdetails.image["path"] = ApiPath + "/images/" + value.short_name + ".jpg";
-            kitchen.userdetails.image["dishname"]= value.name;
-          });		  		  		
+		  kitchen.userdetails.phone = user.phone;		  		  
+		  kitchen.userdetails.image = ApiPath + "/images/" + user.favDish + ".jpg";
+		  kitchen.userdetails.description = menu_item.description;
+		  kitchen.userdetails.dishname = menu_item.name;
+
+		  console.log(kitchen.userdetails);		  
 		  return kitchen.userdetails;
 		};
 
